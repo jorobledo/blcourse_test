@@ -13,7 +13,6 @@
 #     name: python3
 # ---
 
-
 # %% [markdown]
 # # Notation
 # $\newcommand{\ve}[1]{\mathit{\boldsymbol{#1}}}$
