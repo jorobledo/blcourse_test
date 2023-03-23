@@ -6,3 +6,6 @@ Use https://jupytext.readthedocs.io to create a notebook.
 $ jupytext --to ipynb notebook.py
 $ jupyter-notebook notebook.ipynb
 ```
+
+For convenience the ipynb file is included. Please keep it in sync with the py
+file using jupytext.
