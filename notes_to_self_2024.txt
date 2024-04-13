@@ -1,0 +1,86 @@
+Course 2024 Notes to self
+
+Preparation
+- https://gitlab.jsc.fz-juelich.de/training/blueprint/-/wikis/system-reservation#reservation (Sonderwünsche is on the second page)
+- Just JUSUF-GPUS would be enough (first day 36000/50000 requested hours were used, overall 58000 was used given that one day was a fallback)
+
+Technical issues with Jupyter
+
+- Reservations have to start at 8.30
+- Possibly the nodes have to be started before the course so that they boot beforehand and one does not have to wait for that
+-
+
+Kernels
+
+- After making a kernel one needs to make it visible to other members of the project
+
+	* I created two files on the sc_venv_XXXXX : create_kernel_project.sh - if you change something on the kernels, this should re-create the link - although I don't think it's necessary. 
+	* And one needs to enable the julich project before with jutil env activate -p training2405
+	* I modified the script, in order to create kernels for the project.
+
+- Multiprocessing issue - do not use srun in the kernel template
+- Problem with the env stuck on initialisation:
+
+	* Kept IPython on the modules file and added "tornado" to the modules (ipykernel needs it)
+	* Removed ipykernel from requirements as it comes from there
+
+	* cleaned $HOME/.local on jusuf from this 12:39 garbage
+
+
+Material
+
+- First notebook = first day - 30 min
+- Second notebook = second day + 30 min
+- Third notebook = third day, always check timings and Colab
+- Fourth set of notebooks: fourth day + BNN but math can be given slower
+- BNNs: very primitive examples, maybe find something better
+- Last day was only VAE and flows, ended at 11.20
+
+Problems during the course
+
+- People do not see the right folder because they chose the wrong project or did not specify the partition, or resources: delete the lab, create a new one [documentation seemed to have been not that good, check the hedgedoc]
+- everything is blank: delete, log out and in again
+- do not see the partition: chose the wrong resources
+- inactive reservations: log out and log in
+- strange view: wrong resources; possibly delete all Jupyter labs
+
+
+Bayes kernel modules
+
+module purge
+module load Stages/2024
+module load GCC #OpenMPI 
+# Some base modules commonly used in AI
+#module load mpi4py 
+module load numba tqdm matplotlib IPython SciPy-Stack bokeh git
+module load Flask Seaborn
+module load tornado
+
+Bayes kernel requirements
+
+pip
+pymc
+ipykernel==6.23.1
+
+TF kernel modules
+
+module purge
+module load Stages/2023
+module load GCC OpenMPI
+# Some base modules commonly used in AI
+module load mpi4py numba tqdm matplotlib IPython SciPy-Stack bokeh git
+module load Flask Seaborn
+# This module brings many dependencies we will use later
+#module load PyQuil
+
+# ML Frameworks
+#module load  PyTorch scikit-learn torchvision PyTorch-Lightning
+#module load tensorboard
+module load TensorFlow scikit-learn
+
+TF kernel requirements
+
+statannot
+imageio
+tensorflow-probability==0.19.0
+tensorflow-datasets
