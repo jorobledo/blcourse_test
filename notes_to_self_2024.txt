@@ -18,6 +18,98 @@ Kernels
 	* And one needs to enable the julich project before with jutil env activate -p training2405
 	* I modified the script, in order to create kernels for the project.
 
+
+######################create_kernel_project.sh
+#!/bin/bash
+  
+SOURCE_PATH="${BASH_SOURCE[0]:-${(%):-%x}}"
+
+RELATIVE_PATH="$(dirname "$SOURCE_PATH")"
+ABSOLUTE_PATH="$(realpath "${RELATIVE_PATH}")"
+source "${ABSOLUTE_PATH}"/config.sh
+
+KERNELFILE="${ENV_DIR}"/kernel.sh
+
+echo the name is "$ENV_NAME"
+
+echo "Setting up the kernel script in the following dir: " "${KERNELFILE}"
+
+echo '#!/bin/bash
+
+source "'"${ABSOLUTE_PATH}"'"/activate.sh
+
+hostname=$(hostname)
+
+if [[ $hostname == *"login"* || $hostname == *"jsfl"* ]]; then
+   exec python -m ipykernel "$@"
+else
+   srun python -m ipykernel "$@"
+fi
+' > "${KERNELFILE}"
+
+chmod a+x "${KERNELFILE}"
+
+mkdir -p $PROJECT/.local/share/jupyter/kernels/"${ENV_NAME}"
+echo '{
+ "argv": [
+  "'"${KERNELFILE}"'",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "'"${ENV_NAME}"'",
+ "language": "python"
+}' > $PROJECT/.local/share/jupyter/kernels/"${ENV_NAME}"/kernel.json
+
+####################
+
+
+################create_kernel.sh
+
+#!/bin/bash
+  
+SOURCE_PATH="${BASH_SOURCE[0]:-${(%):-%x}}"
+
+RELATIVE_PATH="$(dirname "$SOURCE_PATH")"
+ABSOLUTE_PATH="$(realpath "${RELATIVE_PATH}")"
+source "${ABSOLUTE_PATH}"/config.sh
+
+KERNELFILE="${ENV_DIR}"/kernel.sh
+
+echo the name is "$ENV_NAME"
+
+echo "Setting up the kernel script in the following dir: " "${KERNELFILE}"
+
+echo '#!/bin/bash
+
+source "'"${ABSOLUTE_PATH}"'"/activate.sh
+
+hostname=$(hostname)
+
+if [[ $hostname == *"login"* || $hostname == *"jsfl"* ]]; then
+   exec python -m ipykernel "$@"
+else
+#   srun python -m ipykernel "$@"
+   exec python -m ipykernel "$@"
+fi
+' > "${KERNELFILE}"
+
+chmod a+x "${KERNELFILE}"
+
+mkdir -p ~/.local/share/jupyter/kernels/"${ENV_NAME}"
+echo '{
+ "argv": [
+  "'"${KERNELFILE}"'",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "'"${ENV_NAME}"'",
+ "language": "python"
+}' > ~/.local/share/jupyter/kernels/"${ENV_NAME}"/kernel.json
+
+###################
+
+
+
 - Multiprocessing issue - do not use srun in the kernel template
 - Problem with the env stuck on initialisation:
 
