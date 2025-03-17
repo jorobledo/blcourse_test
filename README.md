@@ -19,7 +19,4 @@ When observing data, the key question is: What I can learn from the observation?
 - Running Bayesian models on a Supercomputer
 
 ## 🛠 Prerequisites
-- Basic probability and statistics
-- Python programming
-- Some familiarity with linear algebra
-
+Participants should be familiar with general statistical concepts, such as distributions, samples. Furthermore, familiarity with fundamental Machine Learning concepts such as regression, classification and training is helpful.
