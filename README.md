@@ -20,10 +20,3 @@ Welcome to the **Introduction to Bayesian Learning Course**! This course is desi
 - Python programming
 - Some familiarity with linear algebra
 
-## 🚀 Getting Started
-1. Clone this repository:
-   ```sh
-   git clone https://github.com/yourusername/bayesian-course.git
-   ```
-2. There are Colab notebooks available on each course day folder!
-
